@@ -1,0 +1,42 @@
+# Ignorar dependências do Node.js
+node_modules/
+
+# Ignorar arquivos de log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorar arquivos de ambiente
+.env
+
+# Ignorar arquivos de cache
+.cache/
+
+# Ignorar arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Ignorar pastas de build temporárias
+dist/
+build/
+
+# Ignorar arquivos do VSCode
+.vscode/
+
+# Ignorar arquivos de produção
+*.log
+
+# Ignorar arquivos de configuração pessoais
+*.env.*
+
+# Ignorar arquivos de coverage de testes
+coverage/
+
+# Ignorar arquivos de lock
+package-lock.json
+yarn.lock
+
+# Ignorar arquivos/pastas criados por você que não quer versionar
+# Exemplo: arquivos temporários, pastas de uploads, etc.
+# uploads/
+# temp/

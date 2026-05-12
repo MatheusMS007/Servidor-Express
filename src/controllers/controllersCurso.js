@@ -1,5 +1,6 @@
-import { cursosArray } from "../models/modelCurso.js"
 import path from 'path'
+import { lerCursos, salvarCursos } from '../models/modelcurso.js'
+import {v4 as uuidv4} from 'uuid'
 
 // função para criar um curso
 export const criarCurso = (req, res) => {
@@ -10,7 +11,7 @@ export const criarCurso = (req, res) => {
         const tipo = req.body.tipo // pega o valor do corpo da requisição. o valor de tipo
     
     
-        const novoCurso = {cod: cod, curso: curso, ch: ch, tipo: tipo} // pega os valores e cria um novo objeto com eles
+        const novoCurso = {id: uuidv4(),cod: cod, curso: curso, ch: ch, tipo: tipo} // pega os valores e cria um novo objeto com eles
         cursosArray.push(novoCurso) // adiciona o novo curso ao array de cursos
     
     

@@ -2,6 +2,8 @@ import path from 'path'
 import { lerCursos, salvarCursos } from '../models/modelcurso.js'
 import {v4 as uuidv4} from 'uuid'
 
+let cursosArray = lerCursos() // lê os cursos do arquivo JSON e armazena em um array para manipular os dados dos cursos
+
 // função para criar um curso
 export const criarCurso = (req, res) => {
 
@@ -13,6 +15,7 @@ export const criarCurso = (req, res) => {
     
         const novoCurso = {id: uuidv4(),cod: cod, curso: curso, ch: ch, tipo: tipo} // pega os valores e cria um novo objeto com eles
         cursosArray.push(novoCurso) // adiciona o novo curso ao array de cursos
+        salvarCursos(cursosArray) // salva o array de cursos no arquivo JSON
     
     
         //const {curso, ch, tipo} = req.body // desestruturação do objeto para pegar os valores de curso, ch e tipo
@@ -26,7 +29,8 @@ export const criarCurso = (req, res) => {
 
     // função para listar todos os cursos
 export const listaCursos = (req, res) => {
-    res.status(200).json(cursosArray) // mostra os cursos cadastrados em formato JSON
+    res.render('cursos', {cursosArray}) // mostra os cursos cadastrados usando o template engine EJS
+    //res.status(200).json(cursosArray) // mostra os cursos cadastrados em formato JSON
 }
 
 

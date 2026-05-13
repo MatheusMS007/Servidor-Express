@@ -1,7 +1,7 @@
 import express from 'express'
 import { criarCurso, listaCursos, cadastrarCurso, buscarCurso, atualizarCurso, deletarCurso, alterarCurso } from '../controllers/controllersCurso.js'
 
-const router = express()
+const router = express.Router()
 
 // rota para cadastrar um curso
 router.post('/cursos', criarCurso) // pega uma requisição em post e chama a função criarCurso para cadastrar um curso

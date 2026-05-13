@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos</title>
+</head>
+<body>
+    <h1>Cursos Disponíveis</h1>
+     <% cursosArray.forEach(curso => { %>
+        <div>
+            <h2>
+                Codigo: <%= curso.cod %>
+                Nome: <%= curso.curso %>
+                Carga Horária: <%= curso.ch %>
+                Tipo: <%= curso.tipo %>
+            </h2>
+        </div>
+    <% }) %>
+</body>
+</html>

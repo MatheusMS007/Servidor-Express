@@ -16,12 +16,12 @@ export function lerCursos() {
         if(!fs.existsSync(caminho)) {
             fs.writeFileSync(caminho, '[]', 'utf-8')
         }   
-    const conteudo = fs.readFileSync(caminho, 'utf-8')
-    if(conteudo === '') {
-        return []
-    } else {
-        return JSON.parse(conteudo)
-    }
+        const conteudo = fs.readFileSync(caminho, 'utf-8')
+        if(conteudo === '') {
+            return []
+        } else {
+            return JSON.parse(conteudo)
+        }
     } catch (error) {
         console.error('Erro ao ler o arquivo de cursos:', error)
         return []
@@ -31,8 +31,8 @@ export function lerCursos() {
 export function salvarCursos(arrayCursos) {
     console.log('Salvando cursos no arquivo:', arrayCursos)
     try {
-        fs.writeFileSync(caminho.JSON.stringify(arrayCursos, null, 2))
-        console.log('Cursos salvos com sucesso!')
+        fs.writeFileSync(caminho, JSON.stringify(arrayCursos, null, 2))
+        console.log('Arquivo json salvo com sucesso!')
 
     } catch (error) {
         console.error('Erro ao salvar os cursos:', error)

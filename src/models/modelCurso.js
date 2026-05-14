@@ -11,6 +11,7 @@ import path from 'path'
 
 const caminho = path.join(import.meta.dirname, '..', 'database', 'cursos.json')
 
+// função para ler os cursos do arquivo JSON
 export function lerCursos() {
     try {
         if(!fs.existsSync(caminho)) {
@@ -28,6 +29,7 @@ export function lerCursos() {
     }
 }
 
+// função para salvar os cursos no arquivo JSON
 export function salvarCursos(arrayCursos) {
     console.log('Salvando cursos no arquivo:', arrayCursos)
     try {

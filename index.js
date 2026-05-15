@@ -1,5 +1,6 @@
 import express from 'express'
 import routerCurso from './src/routers/routerCurso.js'
+import routerAluno from './src/routers/routerAluno.js'
 import path from 'path'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
@@ -25,6 +26,7 @@ app.set('views', path.join(import.meta.dirname, 'src', 'views')) // configura a 
 
 app.use(routerCurso) // usa o routerCurso para configurar as rotas do curso
 
+app.use(routerAluno) // usa o routerAluno para configurar as rotas do aluno
 
 // rota para mostrar a página inicial
 app.get('/', (req, res) => { // pega uma requisição em get

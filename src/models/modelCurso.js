@@ -1,14 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 
-
-//export const  cursosArray = [{
-    //cod: '001',
-    //curso: 'Desenv. sist.',
-    //ch: '1200',
-    //tipo:'Técnico'}
-//]
-
 const caminho = path.join(import.meta.dirname, '..', 'database', 'cursos.json')
 
 // função para ler os cursos do arquivo JSON

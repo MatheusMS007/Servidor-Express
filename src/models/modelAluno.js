@@ -20,3 +20,15 @@ export function lerAlunos() {
         return []
     }
 }
+
+// função para salvar os alunos em JSON
+export function salvarAlunos() {
+    console.log('Salvando alunos em arquivos:', alunosArray)
+    try {
+        fs.writeFileSync(caminhoAluno, JSON.stringify(alunosArray, null, 2))
+        console.log('Arquivo json foi salvo com sucesso!')
+    }
+    catch (error) {
+        console.log('Erro ao salvar os alunos:', error)
+    }
+}

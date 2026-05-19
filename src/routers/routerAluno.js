@@ -6,11 +6,14 @@ const routerAluno = express.Router()
 // função criarAluno para cadastrar um aluno
 routerAluno.post('/alunos', criarAluno) 
 
+// rota para mostrar a página de cadastro de alunos
+routerAluno.get('/cadastroAluno', cadastroAluno)
+
 // função listarAluno para listar os alunos
 routerAluno.get('/alunos', listaAlunos)
 
-// função buscarAluno para buscar alunos cadastrados
-routerAluno.get('/alunos', buscarAluno)
+// função buscarAluno para buscar aluno por matrícula
+routerAluno.get('/alunos/:matricula', buscarAluno)
 
 // função atualizarAluno para atualizar alunos cadastrados
 routerAluno.put('/alunos', atualizarAluno)
@@ -21,6 +24,5 @@ routerAluno.delete('/alunos', deletarAluno)
 // função alterarAluno para alterar alunos cadastrados
 routerAluno.patch('/alunos', alterarAluno)
 
-routerAluno.get('/cadastroAluno', cadastroAluno)
 
 export default routerAluno

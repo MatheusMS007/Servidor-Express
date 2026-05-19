@@ -12,8 +12,6 @@ export function lerAlunos() {
         const conteudoAluno = fs.readFileSync(caminhoAluno,'utf8')
         if(conteudoAluno === '') {
             return []
-        } else {
-            return JSON.parse(conteudoAluno)
         }
     } catch (error) {
         console.error('Erro ao ler arquivo do aluno:', error)

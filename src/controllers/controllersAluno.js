@@ -1,7 +1,6 @@
-import path from "path";
-import { lerAlunos, salvarAlunos } from "../models/modelAluno.js";
-import {v4 as uuidv4} from 'uuid'
-import { arrayBuffer } from "stream/consumers";
+import path from "path"
+import { lerAlunos, salvarAlunos } from "../models/modelAluno.js"
+import { v4 as uuidv4 } from 'uuid'
 
 let alunosArray = lerAlunos() // lê os alunos do arquivo JSON e armazena em um array para manipular os dados dos alunos
 
@@ -33,14 +32,17 @@ export const buscarAluno = (req, res) => {
 
 // atualizar um aluno usando a matrícula do aluno como parâmetro na URL
 export const atualizarAluno = (req, res) => {
-    const alunoEnco = alunosArray.find(a => a.matricula === req.params.matricula) // procura o aluno no array e atualiza os dados da matrícula 
-    if(!alunoEnco || !nome || !curso) {
-        return res.status(400).json({messagem: 'Aluno não encontrado!'}) // se o aluno não for encontrado, mostra uma mensagem de erro
+    const { matricula, nome, curso } = req.body
+    const alunoEnco = alunosArray.find(a => a.matricula === req.params.matricula)
+
+    if (!alunoEnco || !matricula || !nome || !curso) {
+        return res.status(400).json({ mensagem: 'Aluno não encontrado ou dados incompletos!' })
     }
 
     alunoEnco.matricula = matricula
     alunoEnco.nome = nome
     alunoEnco.curso = curso
+    salvarAlunos(alunosArray)
 
     const alunoAtualizado = {matricula, nome, curso} // pega os valores e cria um novo objeto com eles
 
@@ -67,13 +69,13 @@ export const alterarAluno = (req, res) => {
 
     const {matricula, nome, curso} = req.body // desestruturação do objeto para pegar os valores de matrícula, nome e curso
 
-    if(matricula !== undefined || matricula !== null || matricula !== '') {
+    if (matricula !== undefined && matricula !== null && matricula !== '') {
         alunoEnco.matricula = matricula
     }
-    if(nome !== undefined || nome !== null || nome !== '') {
+    if (nome !== undefined && nome !== null && nome !== '') {
         alunoEnco.nome = nome
     }
-    if(curso !== undefined || curso !== null || curso !== '') {
+    if (curso !== undefined && curso !== null && curso !== '') {
         alunoEnco.curso = curso
     }
 
@@ -86,5 +88,7 @@ export const alterarAluno = (req, res) => {
     res.status(200).json({messagem: 'Aluno atualizado com sucesso!', alunoAtualizado}) // mostra uma mensagem de sucesso e o aluno atualizado em formato JSON
 }
 
- export const cadastroAluno = (req, res) => {
-    res.sendFile(path.resolve('./src/public/html/cadastroAluno.html'))}
+// função para mostrar a página de cadastro de alunos
+export const cadastroAluno = (req, res) => {
+    res.sendFile(path.resolve('./src/public/html/cadastroAluno.html'))
+}

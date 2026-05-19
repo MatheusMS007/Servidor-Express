@@ -25,7 +25,7 @@ export const listaAlunos = (req, res) => {
 
 // função para buscar um aluno específico
 export const buscarAluno = (req, res) => {
-    const alunoEnco = alunosArray.find(a => a.aluno === req.params.aluno) // procura o aluno no array de alunos usando o nome do aluno passado como parâmetro na URL
+    const alunoEnco = alunosArray.find(a => a.matricula === req.params.matricula) // procura o aluno no array de alunos usando o nome do aluno passado como parâmetro na URL
     if(!alunoEnco) {
         return res.status(500).json({messagem: 'Aluno não encontrado!!'}) // se o aluno não for encontrado, mostra uma mensagem de erro
     }
@@ -85,3 +85,6 @@ export const alterarAluno = (req, res) => {
 
     res.status(200).json({messagem: 'Aluno atualizado com sucesso!', alunoAtualizado}) // mostra uma mensagem de sucesso e o aluno atualizado em formato JSON
 }
+
+ export const cadastroAluno = (req, res) => {
+    res.sendFile(path.resolve('./src/public/html/cadastroAluno.html'))}

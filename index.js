@@ -25,7 +25,6 @@ app.set('views', path.join(import.meta.dirname, 'src', 'views')) // configura a 
 
 
 app.use(routerCurso) // usa o routerCurso para configurar as rotas do curso
-
 app.use(routerAluno) // usa o routerAluno para configurar as rotas do aluno
 
 // rota para mostrar a página inicial

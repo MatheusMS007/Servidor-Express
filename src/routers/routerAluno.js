@@ -1,25 +1,26 @@
 import express from 'express';
-import { criarAluno, listaAlunos, buscarAluno, atualizarAluno, deletarAluno, alterarAluno } from '../controllers/controllersAluno.js';
+import { criarAluno, listaAlunos, buscarAluno, atualizarAluno, deletarAluno, alterarAluno, cadastroAluno } from '../controllers/controllersAluno.js';
 
-const router = express.Router()
+const routerAluno = express.Router()
 
 // função criarAluno para cadastrar um aluno
-router.post('/alunos', criarAluno) 
+routerAluno.post('/alunos', criarAluno) 
 
 // função listarAluno para listar os alunos
-router.post('/alunos', listaAlunos)
+routerAluno.get('/alunos', listaAlunos)
 
 // função buscarAluno para buscar alunos cadastrados
-router.post('/alunos', buscarAluno)
+routerAluno.get('/alunos', buscarAluno)
 
 // função atualizarAluno para atualizar alunos cadastrados
-router.post('/alunos', atualizarAluno)
+routerAluno.put('/alunos', atualizarAluno)
 
 // função deletarAluno para deletar alunos cadastrados
-router.post('/alunos', deletarAluno)
+routerAluno.delete('/alunos', deletarAluno)
 
 // função alterarAluno para alterar alunos cadastrados
-router.post('/alunos', alterarAluno)
+routerAluno.patch('/alunos', alterarAluno)
 
+routerAluno.get('/cadastroAluno', cadastroAluno)
 
-export default router
+export default routerAluno

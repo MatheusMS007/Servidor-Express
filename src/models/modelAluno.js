@@ -16,13 +16,13 @@ export function lerAlunos() {
             return JSON.parse(conteudoAluno)
         }
     } catch (error) {
-        console.error('Erro ao ler alunos:', error)
+        console.error('Erro ao ler arquivo do aluno:', error)
         return []
     }
 }
 
 // função para salvar os alunos em JSON
-export function salvarAlunos() {
+export function salvarAlunos(alunosArray) {
     console.log('Salvando alunos em arquivos:', alunosArray)
     try {
         fs.writeFileSync(caminhoAluno, JSON.stringify(alunosArray, null, 2))

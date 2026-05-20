@@ -1,5 +1,6 @@
 import express from 'express'
-import { criarCurso, listaCursos, cadastrarCurso, buscarCurso, atualizarCurso, deletarCurso, alterarCurso } from '../controllers/controllersCurso.js'
+//import { criarCurso, cadastrarCurso, buscarCurso, atualizarCurso, deletarCurso, alterarCurso } from '../controllers/controllersCurso.ORM.js'
+import { criarCurso, cadastrarCurso } from '../controllers/controllersCursoORM.js'
 
 const router = express.Router()
 
@@ -7,22 +8,22 @@ const router = express.Router()
 router.post('/cursos', criarCurso) // pega uma requisição em post e chama a função criarCurso para cadastrar um curso
 
 // rota para mostrar os cursos cadastrados
-router.get('/cursos', listaCursos)
+//router.get('/cursos', listaCursos)
 
 // rota para mostrar a página de cadastro***
 router.get('/cadastro', cadastrarCurso)
 
- // busca pelo cadastro do curso
-router.get('/cursos/:curso', buscarCurso)
+// busca pelo cadastro do curso
+//router.get('/cursos/:curso', buscarCurso)
 
 // rota para atualizar todos os parametros 
-router.put('/cursos/:cod',atualizarCurso)
+//router.put('/cursos/:cod',atualizarCurso)
 
 // rota para deletar um curso usando o código do curso 
-router.delete('/cursos/:cod', deletarCurso )
+//router.delete('/cursos/:cod', deletarCurso )
 
 // atualiza 1 ou mais dados do curso
-router.patch('/cursos/:cod', alterarCurso)
+//router.patch('/cursos/:cod', alterarCurso)
 
 export default router
 

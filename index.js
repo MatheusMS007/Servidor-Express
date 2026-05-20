@@ -4,6 +4,11 @@ import routerAluno from './src/routers/routerAluno.js'
 import path from 'path'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
+import sequelize from './src/config/orm.js'
+import Cursos from './src/models/cursoORM.js'
+import { sincronizarBD } from './src/config/orm.js' //chamando dentro de chaves são modulos exportados
+
+sincronizarBD() // sincroniza o banco de dados, ou seja, cria as tabelas a partir dos modelos definidos
 
 
 dotenv.config()

@@ -1,5 +1,6 @@
 import path from "path"
 import Cursos from "../models/cursoORM.js"
+import { Op } from "sequelize" // ´OP é um operador que serva para fazer buscas e traz os resultados e sugere o final da busca
 
 
 export  const criarCurso = async(req, res) => {
@@ -17,45 +18,59 @@ export  const criarCurso = async(req, res) => {
     }    
 }
 
+// função para listar os cursos usando o modelo do curso definido no ORM
 export async function listarCursos (req, res) {
-    const sql = 'select * from cursos;'
     try{
-        const [cursos] = await bdConexao.execute(sql)
-        // res.status(200).json(cursos)
-        res.render('listarCursos', {cursos})
+        const cursos = await Cursos.findAll() // findAll é o método usado para buscar todos os registros
+        //res.status(200).json(cursos)
+        res.render('cursos', {cursos})  // esse é usado para renderizar a página listarCursos usando o template engine EJS e passando os cursos como parâmetro
     }catch(err){
         console.log(err)
         res.status(500).json({ erro: err.message})  
     }
 }
 
+// função para buscar um curso usando o modelo do curso definido no ORM usando op.like
 export const buscarCurso = async (req, res) => {
     const nomeCurso = req.params.curso
-    console.log(nomeCurso)
-    const sql = 'select * from cursos where curso = ?;'
     try{
-       const [cursoEncontrado] =  await bdConexao.execute(sql,[nomeCurso])
-       res.status(200).json({mensagem: 'Curso Encontrado: ', cursoEncontrado})
+        const cursoEncontrado = await Cursos.findAll({where: {curso: {[op.like]: `%${nomeCurso}%`}}}) // findAll e op.like são usados para buscar e trazer vários resultados apartir de uma busca
+        //select * from cursos where curso like '%nomeCurso%' // % significa que pode ter qualquer coisa antes ou depois do nome do curso/ isso é para sql
+        res.status(200).json({mensagem: 'Curso Encontrado: ', cursoEncontrado})
     }catch(err){
         console.log(err)
         res.status(500).json({ mensagem: 'Curso não encontrado', erro: err.message})  
     }
 }
 
-export const atualizarCurso = async (req, res) => {
-    const {curso, ch, tipo} = req.body
-    const cod = req.params.cod
-    const dados = [curso, ch, tipo, cod]
 
+export async function atualizarCurso(req, res) {
     try {
-        let update = `update cursos set curso = ?, ch = ?,tipo = ? where cod = ?`
-            
-        await bdConexao.execute(update, dados)
-        
-    } catch (error) {
-        console.log('Erro ao tentar atualizar o curso: ', error.message);
+        const cursoAtualizado = await Cursos.update(req.body, {where: {cod: req.params.cod}})
+        if(!cursoAtualizado) 
+            return res.status(404).json({mensagem: 'Curso não encontrado!'})
+        const cursoEncontrado = await Cursos.findOne({where: {cod: req.params.cod}})
+        if()
     }
+    
 }
+
+
+
+// export const atualizarCurso = async (req, res) => {
+//     const {curso, ch, tipo} = req.body
+//     const cod = req.params.cod
+//     const dados = [curso, ch, tipo, cod]
+
+//     try {
+//         let update = `update cursos set curso = ?, ch = ?,tipo = ? where cod = ?`
+            
+//         await bdConexao.execute(update, dados)
+        
+//     } catch (error) {
+//         console.log('Erro ao tentar atualizar o curso: ', error.message);
+//     }
+// }
 
 export const removerCurso = async (req,res) => {
     const cod = req.params.cod

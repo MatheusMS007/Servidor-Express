@@ -34,7 +34,7 @@ export async function listarCursos (req, res) {
 export const buscarCurso = async (req, res) => {
     const nomeCurso = req.params.curso
     try{
-        const cursoEncontrado = await Cursos.findAll({where: {curso: {[op.like]: `%${nomeCurso}%`}}}) // findAll e op.like são usados para buscar e trazer vários resultados apartir de uma busca
+        const cursoEncontrado = await Cursos.findAll({where: {curso: {[Op.like]: `%${nomeCurso}%`}}}) // findAll e op.like são usados para buscar e trazer vários resultados apartir de uma busca
         //select * from cursos where curso like '%nomeCurso%' // % significa que pode ter qualquer coisa antes ou depois do nome do curso/ isso é para sql
         res.status(200).json({mensagem: 'Curso Encontrado: ', cursoEncontrado})
     }catch(err){
@@ -43,34 +43,27 @@ export const buscarCurso = async (req, res) => {
     }
 }
 
-
+// função para atualizar o curso específico usando o 
 export async function atualizarCurso(req, res) {
-    try {
-        const cursoAtualizado = await Cursos.update(req.body, {where: {cod: req.params.cod}})
-        if(!cursoAtualizado) 
-            return res.status(404).json({mensagem: 'Curso não encontrado!'})
-        const cursoEncontrado = await Cursos.findOne({where: {cod: req.params.cod}})
-        if()
+    const {curso, ch, tipo} = req.body
+
+    if(!curso && !ch && !tipo) { // && é usado para verificar o PUT  que pede todos os parametros
+        return res.status(400).json({mensagem: 'Preencha todos os dados!'})
     }
-    
+    try {
+        const cursoEncontrado = await Cursos.findOne({where: {cod: req.params.cod}})
+        if(!cursoEncontrado) {
+            return res.status(404).json({mensagem: 'Curso não encontrado!'})
+        }
+        const cursoAtualizado = await Cursos.update(req.body, {where: {cod: req.params.cod}})
+            res.status(200).json({mensagem: 'Curso atualizado com sucesso!', curso: cursoEncontrado})
+    } catch (err) {
+         console.log(err)
+         res.status(500).json({ mensagem: 'Erro ao atualizar o curso', erro: err.message })
+     }
 }
 
 
-
-// export const atualizarCurso = async (req, res) => {
-//     const {curso, ch, tipo} = req.body
-//     const cod = req.params.cod
-//     const dados = [curso, ch, tipo, cod]
-
-//     try {
-//         let update = `update cursos set curso = ?, ch = ?,tipo = ? where cod = ?`
-            
-//         await bdConexao.execute(update, dados)
-        
-//     } catch (error) {
-//         console.log('Erro ao tentar atualizar o curso: ', error.message);
-//     }
-// }
 
 export const removerCurso = async (req,res) => {
     const cod = req.params.cod
@@ -81,7 +74,6 @@ export const removerCurso = async (req,res) => {
     catch(err){
         res.status (500).json({mensagem: 'nao encontrei seu curso, volte mais tarde',err})
     }
-
 }
 
 export const alterarCurso = (req, res) => {
@@ -115,3 +107,4 @@ export const alterarCurso = (req, res) => {
 export const cadastrarCurso = (req, res) => {
     res.sendFile(path.resolve('./src/public/html/cadastro.html'))
 }
+

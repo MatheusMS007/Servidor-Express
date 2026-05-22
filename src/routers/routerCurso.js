@@ -1,6 +1,6 @@
 import express from 'express'
 //import { criarCurso, cadastrarCurso, buscarCurso, atualizarCurso, deletarCurso, alterarCurso } from '../controllers/controllersCurso.ORM.js'
-import { criarCurso, cadastrarCurso, listarCursos, buscarCurso } from '../controllers/controllersCursoORM.js'
+import { criarCurso, cadastrarCurso, listarCursos, buscarCurso, atualizarCurso } from '../controllers/controllersCursoORM.js'
 
 const router = express.Router()
 
@@ -14,10 +14,10 @@ router.get('/cursos', listarCursos)
 router.get('/cadastro', cadastrarCurso)
 
 // busca pelo cadastro do curso
-router.get('/cursos/:curso', buscarCurso)
+router.get('/cursos/:curso', buscarCurso) // ter '/curso/:curso' é para buscar na requisição pelo nome do curso
 
 // rota para atualizar todos os parametros 
-//router.put('/cursos/:cod',atualizarCurso)
+router.put('/cursos/:cod',atualizarCurso) // mesma coisa do buscarCurso, tem que passar o parametro COD para atualizaro curso específico
 
 // rota para deletar um curso usando o código do curso 
 //router.delete('/cursos/:cod', deletarCurso )

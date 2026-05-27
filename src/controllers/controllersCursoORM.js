@@ -63,45 +63,40 @@ export async function atualizarCurso(req, res) {
      }
 }
 
-
-
-export const removerCurso = async (req,res) => {
+// função para deletar o curso específico usando o modelo do curso definido no ORM
+export const removerCurso = async (req, res) => {
     const cod = req.params.cod
-    try{
-        let deleteCurso = `delete from cursos where cod = ?`
-        await bdConexao.execute(deleteCurso, [cod])
-    }
-    catch(err){
-        res.status (500).json({mensagem: 'nao encontrei seu curso, volte mais tarde',err})
+    try {
+        const cursoEncontrado = await Cursos.findOne({ where: { cod } })
+        if (!cursoEncontrado) {
+            return res.status(404).json({ mensagem: 'Curso não encontrado!' })
+        }
+        await Cursos.destroy({ where: { cod } })
+        res.status(200).json({ mensagem: 'Curso deletado com sucesso!' })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ mensagem: 'Erro ao deletar o curso', erro: err.message })
     }
 }
 
-export const alterarCurso = (req, res) => {
-    const cursoEncontrado = cursos.find(c => c.cod === req.params.cod)
+// função para alterar o curso específico usando o modelo do curso definido no ORM
+export const alterarCurso = async (req, res) => {
+    const { curso, ch, tipo } = req.body
 
-    if(!cursoEncontrado){
-      return res.status(400).json({mensagem: 'Curso não encontrado!'})
+    if (!curso && !ch && !tipo) { // || é usado para verificar o PATCH que aceita atualizar apenas 1 campo
+        return res.status(400).json({ mensagem: 'Informe ao menos um campo para alterar!' })
     }
-
-    const {cod, curso, ch, tipo} = req.body
-
-    if(curso !== undefined && curso !== null  && curso !== '') {
-        cursoEncontrado.curso = curso
+    try {
+        const cursoEncontrado = await Cursos.findOne({ where: { cod: req.params.cod } })
+        if (!cursoEncontrado) {
+            return res.status(404).json({ mensagem: 'Curso não encontrado!' })
+        }
+        await Cursos.update(req.body, { where: { cod: req.params.cod } })
+        res.status(200).json({ mensagem: 'Curso alterado com sucesso!' })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ mensagem: 'Erro ao alterar o curso', erro: err.message })
     }
-    if ( ch !== undefined && ch !== null  && ch !== '' ){
-            cursoEncontrado.ch = Number(ch)
-    }
-    if(tipo !== undefined && tipo !== null  && tipo !== ''){
-        cursoEncontrado.tipo = tipo  
-    }
-    
-    const cursoAtual = {
-        cod: cod,  
-        curso: cursoEncontrado.curso, 
-        ch: cursoEncontrado.ch, 
-        tipo: cursoEncontrado.tipo}
-
-    res.status(200).json({mensagem: 'Curso Encontrado: ', cursoAtual})
 }
 
 export const cadastrarCurso = (req, res) => {
